@@ -14,7 +14,7 @@ describe('Funcionalidade da página de produtos', () => {
     });
 
     //Somente este cenario será executado .only()
-    it.only('Deve adicionar um produto ao carrinho', () => {
+    it('Deve adicionar um produto ao carrinho', () => {
 
         var quantidade = 3
 
@@ -26,8 +26,14 @@ describe('Funcionalidade da página de produtos', () => {
 
         cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantidade) // Verifica se a quantidade foi adicionada
         cy.get('.woocommerce-message').should('contain', quantidade + ' × “Ariel Roll Sleeve Sweatshirt” foram adicionados no seu carrinho.') //concatena a variavel com a mensagem
-
-
         
     });
+
+
+    it.only('Deve adicionar produtos ao carrinho - Usando Comandos Customizaveis', () => {
+        cy.addProdutos(5, '36', 'Blue', 3)   
+    });
+
+
+
 });
