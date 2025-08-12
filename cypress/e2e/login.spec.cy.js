@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+const perfil = require('../fixtures/perfil.json')
 
 
 context('funcionalidade login', () =>{
@@ -14,6 +15,23 @@ context('funcionalidade login', () =>{
 
         cy.get('.page-title').should('contain','Minha conta')
     })
+
+    it('Deve fazer login com sucesso - usando arquivo de dados', () => {
+        cy.get('#username').type(perfil.usuario)
+        cy.get('#password').type(perfil.senha)
+        cy.get('.woocommerce-form > .button').click()
+        cy.get('.page-title').should('contain','Minha conta')
+    })
+
+    it.only('Deve fazer login com sucesso - usando FIXTURES', () => {
+        cy.fixture('perfil').then(dados => {
+            cy.get('#username').type(dados.usuario)
+            cy.get('#password').type(dados.senha, {log:false}); //Não exibe a senha
+            cy.get('.woocommerce-form > .button').click()
+            cy.get('.page-title').should('contain','Minha conta')
+            })
+        })
+
 
     it('deve exibir mensagem de erro ao inserir usuario inválido', ()=>{
         cy.get('#username').type('aluno_ebac@')
